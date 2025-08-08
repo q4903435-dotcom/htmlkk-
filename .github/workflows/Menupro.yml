@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Kéo menu giữa màn hình (Hỗ trợ Firefox)</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: #f4f4f4;
+    }
+
+    #menu {
+      width: 200px;
+      height: 200px;
+      background-color: #2ecc71;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      cursor: grab;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      user-select: none;
+    }
+
+    #menu.dragging {
+      cursor: grabbing;
+    }
+
+    #menu button {
+      margin: 5px;
+      padding: 10px 15px;
+      background-color: white;
+      color: #2ecc71;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #menu button:hover {
+      background-color: #ecf0f1;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="menu">
+    <button>AIMLOCK</button>
+    <button>DATA</button>
+    <button>AIMBOT</button>
+  </div>
+
+  <script>
+    const menu = document.getElementById("menu");
+
+    let isDragging = false;
+    let startX, startY;
+    let initialX, initialY;
+
+    menu.addEventListener("mousedown", (e) => {
+      isDragging = true;
+      startX = e.clientX;
+      startY = e.clientY;
+
+      // Get current position from computed style
+      const computedStyle = window.getComputedStyle(menu);
+      initialX = parseInt(computedStyle.left, 10);
+      initialY = parseInt(computedStyle.top, 10);
+
+      menu.classList.add("dragging");
+    });
+
+    document.addEventListener("mouseup", () => {
+      isDragging = false;
+      menu.classList.remove("dragging");
+    });
+
+    document.addEventListener("mousemove", (e) => {
+      if (isDragging) {
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+
+        menu.style.left = `${initialX + dx}px`;
+        menu.style.top = `${initialY + dy}px`;
+        menu.style.transform = `translate(0, 0)`; // Override center transform
+      }
+    });
+  </script>
+
+</body>
+</html>
