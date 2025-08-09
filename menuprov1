@@ -2,176 +2,124 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>H5GG Control Panel</title>
+  <title>Menu Panel Lite - Bé iu</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #0e0e0e;
-      color: #fff;
+      background-color: #f2f2f2;
       padding: 20px;
+      color: #333;
     }
 
-    .menu-box {
-      max-width: 450px;
+    .panel {
+      background: white;
+      max-width: 400px;
       margin: auto;
-      background: #1a1a1a;
-      border-radius: 12px;
       padding: 20px;
-      box-shadow: 0 0 20px rgba(0, 255, 200, 0.15);
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
 
     h2 {
       text-align: center;
       margin-bottom: 20px;
-      color: #00ffc3;
+      color: #0099cc;
     }
 
-    .form-control {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin: 12px 0;
-      padding: 10px 14px;
-      background: #2a2a2a;
-      border-radius: 8px;
+    .section {
+      margin-bottom: 25px;
     }
 
     label {
-      font-size: 16px;
-    }
-
-    input[type="checkbox"] {
-      transform: scale(1.3);
-      cursor: pointer;
-    }
-
-    .run-btn {
-      width: 100%;
-      padding: 12px;
-      margin-top: 20px;
-      background: #00b894;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      font-size: 16px;
+      display: block;
+      margin-top: 10px;
       font-weight: bold;
-      transition: background 0.3s ease;
     }
 
-    .run-btn:hover {
-      background: #00cec9;
+    input[type=range] {
+      width: 100%;
+    }
+
+    .checkbox-group label {
+      font-weight: normal;
+    }
+
+    .checkbox-group input {
+      margin-right: 8px;
+    }
+
+    .value {
+      font-size: 14px;
+      margin-left: 10px;
+      color: #555;
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 10px;
+      border: none;
+      background-color: #0099cc;
+      color: white;
+      font-size: 16px;
+      border-radius: 5px;
       cursor: pointer;
     }
 
-    .footer {
-      text-align: center;
-      margin-top: 20px;
-      font-size: 14px;
-      color: #888;
+    button:hover {
+      background-color: #0077aa;
     }
   </style>
 </head>
 <body>
 
-  <div class="menu-box">
-    <h2>🛠️ H5GG MENU FORM</h2>
+  <div class="panel">
+    <h2>🌟 Menu Panel Lite</h2>
 
-    <div class="form-control">
-      <label>🌿 Nhẹ Tâm</label>
-      <input type="checkbox" id="light_crosshair">
+    <div class="section">
+      <label for="buff">🔧 Buff nhạy & độ mượt: <span id="buffValue">100</span></label>
+      <input type="range" id="buff" min="1" max="200" value="100" oninput="updateValue('buff')">
     </div>
 
-    <div class="form-control">
-      <label>🛠️ Fix Lố</label>
-      <input type="checkbox" id="fix_lo">
+    <div class="section">
+      <label>⚙️ Chức năng:</label>
+      <div class="checkbox-group">
+        <label><input type="checkbox" id="nhẹTâm"> Nhẹ tâm</label>
+        <label><input type="checkbox" id="lockhead"> Lockhead</label>
+        <label><input type="checkbox" id="dataFix"> Data fix rung</label>
+        <label><input type="checkbox" id="fixLo"> Fix lố</label>
+      </div>
     </div>
 
-    <div class="form-control">
-      <label>🔧 Fix Rung</label>
-      <input type="checkbox" id="fix_rung">
+    <div class="section">
+      <label for="config">🛠 Buff tối ưu: <span id="configValue">60</span></label>
+      <input type="range" id="config" min="1" max="120" value="60" oninput="updateValue('config')">
+
+      <label style="margin-top:10px;"><input type="checkbox" id="toiUuThietBi"> Tối ưu thiết bị</label>
     </div>
 
-    <div class="form-control">
-      <label>🔥 Fix Nặng Tâm</label>
-      <input type="checkbox" id="heavy_crosshair">
-    </div>
-
-    <div class="form-control">
-      <label>🎯 AimHead</label>
-      <input type="checkbox" id="aim_head">
-    </div>
-
-    <div class="form-control">
-      <label>🛡️ AntiBan</label>
-      <input type="checkbox" id="anti_ban">
-    </div>
-
-    <div class="form-control">
-      <label>🎯 AimLock</label>
-      <input type="checkbox" id="aim_lock">
-    </div>
-
-    <div class="form-control">
-      <label>🤖 Aimbot</label>
-      <input type="checkbox" id="aim_bot">
-    </div>
-
-    <button class="run-btn" onclick="activateFeatures()">🚀 Kích Hoạt Tính Năng</button>
-
-    <div class="footer">© 2025 H5GG UI by DevPro</div>
+    <button onclick="submitPanel()">💾 Lưu cấu hình</button>
   </div>
 
   <script>
-    function activateFeatures() {
-      const features = {
-        light_crosshair: document.getElementById('light_crosshair').checked,
-        fix_lo: document.getElementById('fix_lo').checked,
-        fix_rung: document.getElementById('fix_rung').checked,
-        heavy_crosshair: document.getElementById('heavy_crosshair').checked,
-        aim_head: document.getElementById('aim_head').checked,
-        anti_ban: document.getElementById('anti_ban').checked,
-        aim_lock: document.getElementById('aim_lock').checked,
-        aim_bot: document.getElementById('aim_bot').checked
-      };
-
-      for (const [key, isEnabled] of Object.entries(features)) {
-        if (isEnabled) {
-          runH5GGScript(key);
-        }
-      }
-
-      alert("✅ Đã kích hoạt các chức năng được chọn!");
+    function updateValue(id) {
+      document.getElementById(id + "Value").innerText = document.getElementById(id).value;
     }
 
-    function runH5GGScript(scriptName) {
-      // Đây là nơi bạn gắn mã của từng script H5GG
-      switch (scriptName) {
-        case 'light_crosshair':
-          h5gg.setValueAt(0x11111111, "float", 1.0);
-          break;
-        case 'fix_lo':
-          h5gg.setValueAt(0x22222222, "float", 0.5);
-          break;
-        case 'fix_rung':
-          h5gg.setValueAt(0x33333333, "float", 0.0);
-          break;
-        case 'heavy_crosshair':
-          h5gg.setValueAt(0x44444444, "float", 3.0);
-          break;
-        case 'aim_head':
-          h5gg.setValueAt(0x55555555, "float", 999.0);
-          break;
-        case 'anti_ban':
-          h5gg.setValueAt(0x66666666, "byte", 0);
-          break;
-        case 'aim_lock':
-          h5gg.setValueAt(0x77777777, "float", 1.0);
-          break;
-        case 'aim_bot':
-          h5gg.setValueAt(0x88888888, "float", 5.0);
-          break;
-      }
+    function submitPanel() {
+      const config = {
+        buff: document.getElementById('buff').value,
+        config: document.getElementById('config').value,
+        chứcNăng: {
+          nhẹTâm: document.getElementById('nhẹTâm').checked,
+          lockhead: document.getElementById('lockhead').checked,
+          dataFix: document.getElementById('dataFix').checked,
+          fixLo: document.getElementById('fixLo').checked
+        },
+        tốiƯuThiếtBị: document.getElementById('toiUuThietBi').checked
+      };
+      console.log("Cấu hình đã lưu:", config);
+      alert("✅ Cấu hình đã lưu thành công!");
     }
   </script>
 
